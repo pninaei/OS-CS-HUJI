@@ -1,2 +1,2 @@
-# OS-CS-HUJI-2024
+# OS-CS-HUJI
 OS course-2024 huji
