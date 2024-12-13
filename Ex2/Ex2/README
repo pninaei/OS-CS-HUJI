@@ -1,0 +1,100 @@
+pnina_ei
+Pnina Eisenbach 212125678
+EX: 2
+
+FILES:
+uthreads.cpp -- a file with the uthreads library
+Thread.cpp -- a file with the code for the Thread class
+Thread.h -- a file with some headers for the Thread class
+
+ANSWERS:
+
+Q1:
+1. siglongjmp and sigsetymp:
+a. sigsetjmp- is used to save the current environment of the thread
+(including all the registers in the CPU, the SP and PC), save it in some
+object.
+siglongjmp - restores the environment saved by an earlier call to
+sigsetjmp, puts in the CPU all the values of the data that has been
+saved and keep the running of the thread from the point it has
+been stopped.
+
+b. The functions can manipulate the signal mask of a Process, which
+determines which signals are currently blocked from being delivered. this
+works like that:
+sigsetymp- when calling it, you have the option to save the current signal
+mask along with the program execution state (this is the savemask
+Parameter). If savemask is zero, only the Programs execution state is
+saved without the signal mask. otherwise, we save the signal mask along
+with the program environment.
+siglongjmp - if the signal mask was saved, the function restores the save
+signal mask
+
+Q2:
+web server designed to handle many simultaneous connection efficiently.
+Each connection might represent an HTTP request that involves reading
+data from a socket, processing the request and so on. Handling each
+connection is a separate thread can simplify the design, making it easier to
+right and maintain. However, using kernel threads for each connection can
+be resource intensive and may not scale well with a large number of
+connection. Using user level threads have some advantages like:
+Low Overhead - context switching between user level thread is much
+faster than context switching between kernel level threads because it
+does not involve switching user and kernel mode.
+Efficient scheduling - the web server can implement its own thread
+scheduler that can be optimized for handling web requests, ensuring that
+resources are used efficiently and that high priority tasks are handled
+promptly.
+
+Q3:
+The advantages of creating new processes instead of using kernel level
+threas are:
+• fault isolation: each tab runs in its own process, so if one tab crashes or
+experiences a fault, it doesn’t affect the other tabs. This improves the
+overall stability of the browser.
+• Memory management: each process has its own address space, making it
+easier to detect and handle memory leaks. When a tab is closed, the OS
+can reclaim all memory used by that process, reducing memory usage.
+• CPU scheduling: modern OS can better manage CPU scheduling across
+multiple processes, potentially improving performance and responsiveness
+when multiple tabs are active.
+Some of the disadvantages of not using kernel level threads are:
+• Memory overhead: processes have higher memory overhead compared to
+threads because each process has its own memory space, page table and
+other resources. This can lead to higher overall memory usage.
+• (IPC) performance impact: communication between processes is generally
+slower and more complex than communication between threads within
+the same process. This can introduce latency and overhead, especially if
+frequent data sharing or synchronization is required.
+
+Q4:
+In this execution the following events occurred:
+From the keyboard: the command to launch the application and later to find
+its PID and kill it are typed into the terminal. These keystrokes generate
+keyboard interrupts that the shell reads.
+From the shell: the shell interprets the commands appname, ps -A, and kill
+and passes them to the OS. When we executed the kill command, the shell
+sends signal to the process with the specified PID.
+From the OS: the OS maintains a process table and manages signals
+between processes. When the kill command is issued, the OS sends signal
+to the app process.
+From the app: the application receives the signal. This signal requests the
+app to terminate, allowing it to clean the resources and save any
+necessary state.
+The signal that is involved is the SIGTERM that is triggered by the shell
+and handled by the application. This signal is send by default when the kill
+command is used.
+
+Q5:
+virtual time is the running time of the process and the real time refers to actual, real-world time.
+An example for real time is the time that has passed since the process started running. An example for
+virtual time is the time that the process has spent running on the CPU.
+
+
+
+
+
+
+
+
+
